@@ -8,7 +8,7 @@ TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 def handle_response(text: str) -> str:
     if text.lower() == 'hi':
         return "hi from da web"
-    return "I didn't catch that."
+    return "fuq u nigger"
 @app.get("/api/webhook")
 async def check_health():
     return {"status": "The bot is awake and listening!"}
