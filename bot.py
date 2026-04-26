@@ -1,33 +1,26 @@
+from huggingface_hub import InferenceClient
+import os
+# 1. Initialize the official client
+HF_TOKEN = os.environ.get("HF_TOKEN")
+client = InferenceClient(api_key=HF_TOKEN)
 
-from httpcore import request
-import requests
-from dataclasses import dataclass, field
-from typing import Any
-
-@dataclass
-class Agent():
-    model: str = "qwen2.5-coder-0.5b-instruct-f1"
-    base_url: str = "http://127.0.0.1:1234/v1"
-    api:str = field(default="No_API_Key", repr=False)
-    message:list[dict[str:Any]] = field(default_factory = list)
-
-    def __post_init__(self)->None:
-       self.base_url = self.base_url.rstrip("/")
-
-    def chat(self, user_message:str)->str:
-        self.message.append({"role": "user", "content": user_message})
-        url = f"{self.base_url}/chat/completions"
-        headers = {
-            "authorization": f"bearer {self.api}",
-            "content_type": "json/application"
-        }
-        response = requests.post(
-            url,
-            headers=headers,
-            json = {'Model': self.model, "messages": self.message}
+def query_huggingface(user_text: str):
+    try:
+        # The client automatically handles the correct URLs and formatting!
+        response = client.chat.completions.create(
+            model="Qwen/Qwen2.5-7B-Instruct",
+            messages=[{"role": "user", "content": user_text}],
+            max_tokens=250,
+            temperature=0.7
         )
-        data = response.json()
-        data = data.get("choices")
-        message = data[0].get("message")
-        self.message.append({"role": 'assistance', "content": {message}})
-        return message.get("content")
+        # Extract the text from the response
+        return response.choices[0].message.content
+        
+    except Exception as e:
+        return f"API Error: {str(e)}"
+
+# Test it out
+if __name__ == "__main__":
+    prompt = "Explain quantum computing in one simple sentence."
+    print("Asking Hugging Face...\n")
+    print(query_huggingface(prompt))
