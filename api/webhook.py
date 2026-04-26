@@ -13,8 +13,8 @@ ai_mode = False
 def handle_response(text:str)->str:
     if text.lower() == 'hi':
         return "hi from da web"
-    if ai_mode == True:
-        return await query_huggingface(text)
+    elif ai_mode == True:
+        return query_huggingface(text)
     return "fuck u nigger"
 def ai_mode_command():
     global ai_mode
