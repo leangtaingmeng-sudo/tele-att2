@@ -13,9 +13,9 @@ ai_mode = False
 def handle_response(text:str)->str:
     if text.lower() == 'hi':
         return "hi from da web"
-    return "fuck u nigger"
     if ai_mode == True:
-        return agent.chat(text)
+        return await agent.chat(text)
+    return "fuck u nigger"
 def ai_mode_command():
     global ai_mode
     ai_mode = not ai_mode
