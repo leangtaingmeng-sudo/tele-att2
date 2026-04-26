@@ -3,3 +3,4 @@ fastapi
 pydantic
 httpcore
 requests
+huggingface_hub
