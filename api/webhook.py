@@ -44,7 +44,7 @@ async def webhook_handler(request: Request):
                 ai_mode_command()
                 if ai_mode == True:
                     resp = "ai mode is now true"
-                else: resp = "ai mode is now true"
+                else: resp = "ai mode is now false"
                 await update.message.reply_text(resp)        
             # --- YOUR AI LOGIC GOES HERE ---
             else:
