@@ -17,6 +17,7 @@ def handle_response(text:str)->str:
     if ai_mode == True:
         return agent.chat(text)
 def ai_mode_command():
+    global ai_mode
     ai_mode = not ai_mode
 
 @app.get("/api/webhook")
