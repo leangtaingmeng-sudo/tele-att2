@@ -3,18 +3,18 @@ import os
 from telegram import Update, Bot
 from dataclasses import dataclass, field
 from typing import Any
-from  bot import Agent
+from  bot import query_huggingface
 app = FastAPI()
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 
 bot = Bot(token=TOKEN)
-agent = Agent(model="qwen2.5-coder-0.5b-instruct-f1")
+# agent = Agent(model="qwen2.5-coder-0.5b-instruct-f1")
 ai_mode = False
 def handle_response(text:str)->str:
     if text.lower() == 'hi':
         return "hi from da web"
     if ai_mode == True:
-        return await agent.chat(text)
+        return await query_huggingface(text)
     return "fuck u nigger"
 def ai_mode_command():
     global ai_mode
