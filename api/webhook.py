@@ -12,10 +12,10 @@ bot = Bot(token=TOKEN)
 ai_mode = False
 def handle_response(text:str)->str:
     if text.lower() == 'hi':
-        return "hi from da web"
+        return "hi from da web, migger"
     elif ai_mode == True:
         return query_huggingface(text)
-    return "fuck u nigger"
+    return "ts so peak, gigger"
 def ai_mode_command():
     global ai_mode
     ai_mode = not ai_mode
@@ -42,7 +42,10 @@ async def webhook_handler(request: Request):
                 await update.message.reply_text("Bigger, I am here to help")
             elif user_text.startswith("/ai"):
                 ai_mode_command()
-                await update.message.reply_text("rigger, you can now chat with an ai")        
+                if ai_mode == True:
+                    resp = "ai mode is now true"
+                else: resp = "ai mode is now true"
+                await update.message.reply_text(resp)        
             # --- YOUR AI LOGIC GOES HERE ---
             else:
                 reply = handle_response(user_text)
